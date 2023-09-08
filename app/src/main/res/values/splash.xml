@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.splashScreenTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/baseline_currency_exchange_24_light</item>
+        <item name="postSplashScreenTheme">@style/Theme.CConverter</item>
+    </style>
+</resources>
