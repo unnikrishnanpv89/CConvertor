@@ -12,6 +12,10 @@ interface CurrencyDao {
     @Query("Select * from Currency")
     fun getList() : Flow<List<Currency>>
 
+    @Query("Select * from Currency where currencyName LIKE '%' || :query || '%' OR " +
+            "currencyCode LIKE '%' || :query || '%'")
+    fun searchCurrency(query: String) : Flow<List<Currency>>
+
     @Query("SELECT COUNT(*) FROM Currency where convertRate > 0")
     fun getConvertCount() : Flow<Int>
 

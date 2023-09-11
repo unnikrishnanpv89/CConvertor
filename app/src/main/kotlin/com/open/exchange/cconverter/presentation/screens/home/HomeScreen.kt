@@ -38,7 +38,7 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()){
     val uiState = viewModel.uiState.collectAsState()
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
-    LaunchedEffect(key1 = Unit){
+    LaunchedEffect(key1 = isConnected){
         /**
          * on launch of home screen we will try to fetch convert rate
          * if connected

@@ -111,7 +111,9 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 if (textFieldValue.text.isEmpty()) {
-                    _uiState.value = _uiState.value.copy(inputValue = textFieldValue)
+                    val resultList = _uiState.value.resultList.map{ it.copy(result = 0.0F ) }
+                    _uiState.value = _uiState.value.copy(inputValue = textFieldValue,
+                        resultList = resultList.toMutableList())
                     //restricting max inout length to 15
                 } else if(textFieldValue.text.length < 15) {
                     val input = textFieldValue.text.toFloat()
