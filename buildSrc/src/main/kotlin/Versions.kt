@@ -2,6 +2,7 @@ object Versions {
 
     const val composeVersion              = "1.6.0-alpha04"
     const val activityCompose             = "1.8.0-alpha07"
+    const val activityKtx                 = "1.3.1"
     const val composeMaterial3            = "1.2.0-alpha06"
     const val uiUtilVersion               = "1.6.0-alpha04"
     const val composeNavigation           = "2.7.1"

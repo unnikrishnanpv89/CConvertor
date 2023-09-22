@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -77,7 +78,8 @@ fun CurrencyShapeSelection(shadowText: String,
 
 @Composable
 fun CurrencyShapeResult(result: ResultModel) {
-    Box(contentAlignment = Alignment.Center,
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = Modifier//.graphicsLayer(shape = boxShape, clip = true)
             .shadow(
                 elevation = 1.dp,
@@ -86,7 +88,8 @@ fun CurrencyShapeResult(result: ResultModel) {
             )
             .fillMaxWidth(0.9f)
             .aspectRatio(4f)
-            .background(CConverterTheme.colors.primary)) {
+            .background(CConverterTheme.colors.primary)
+    ) {
         Text(
             text = result.currencyCode,
             color = CConverterTheme.colors.onSurface.copy(0.3f),
@@ -100,16 +103,19 @@ fun CurrencyShapeResult(result: ResultModel) {
             style = MaterialTheme.typography.titleLarge
         )
         Text(
-            text = if(result.result > 0){
+            text = if (result.result > 0) {
                 String.format("%.2f", result.result)
-             }else{
-                 String()
-              },
-            modifier = Modifier.align(Alignment.BottomCenter),
+            } else {
+                String()
+            },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .testTag(stringResource(R.string.test_result)),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center,
             color = CConverterTheme.colors.onSurface,
-            style = MaterialTheme.typography.displayMedium)
-        }
+            style = MaterialTheme.typography.displayMedium
+        )
+    }
 }

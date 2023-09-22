@@ -96,6 +96,7 @@ class HomeScreenViewModel @Inject constructor(
                         selectedCurrency = list.toMutableList(),
                         resultList = list.toResultList(uiState.value.resultList)
                 )
+                covertCurrency(uiState.value.inputValue)
             }
         }
     }
@@ -212,5 +213,13 @@ class HomeScreenViewModel @Inject constructor(
 
         // Convert from USD to target currency
         return amountInUSD * usdToTargetCurrencyRate
+    }
+
+    fun swap(fromIndex: Int, toIndex: Int) {
+        val list = uiState.value.resultList.toMutableList()
+        val temp = list[fromIndex]
+        list[fromIndex] = list[toIndex]
+        list[toIndex] = temp
+        _uiState.value = _uiState.value.copy(resultList = list)
     }
 }

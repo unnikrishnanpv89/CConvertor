@@ -5,23 +5,23 @@ import com.open.exchange.data.remote.openexchange.APIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     /**
      * Provides BaseUrl as string
      */
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideBaseURL(): String {
         return Constants.BASE_URL
@@ -30,7 +30,7 @@ object NetworkModule {
     /**
      * Provides LoggingInterceptor for api information
      */
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -39,7 +39,7 @@ object NetworkModule {
     /**
      * Provides custom OkkHttp
      */
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClient = OkHttpClient().newBuilder()
@@ -56,7 +56,7 @@ object NetworkModule {
     /**
      * Provides converter factory for retrofit
      */
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideConverterFactory(): Converter.Factory {
         return GsonConverterFactory.create()
@@ -65,7 +65,7 @@ object NetworkModule {
     /**
      * Provides ApiServices client for Retrofit
      */
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideRetrofitClient(
         baseUrl: String,
@@ -82,7 +82,7 @@ object NetworkModule {
     /**
      * Provides Api Service using retrofit
      */
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideRestApiService(retrofit: Retrofit): APIService {
         return retrofit.create(APIService::class.java)

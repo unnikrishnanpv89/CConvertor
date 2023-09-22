@@ -14,4 +14,6 @@
     <string name="textfield_hint">0.0</string>
     <string name="done_action">Done</string>
     <string name="selected">selected</string>
+    <string name="search_currency">Search Currency</string>
+    <string name="test_result">result</string>
 </resources>

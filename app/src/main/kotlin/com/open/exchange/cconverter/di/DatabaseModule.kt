@@ -7,21 +7,19 @@ import com.open.exchange.data.local.datastore.SharedPrefenceStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideDb(app: Application) = AppDatabase.getInstance(app)
 
-    @ViewModelScoped
+    @Singleton
     @Provides
     fun provideCurrencyDao(db: AppDatabase) = db.getCurrencyListDao()
 }

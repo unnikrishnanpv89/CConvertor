@@ -66,5 +66,5 @@
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android.
 
 ## :camera: Screenshots
- 
- ![](media/2.png) | ![](media/3.png) | ![](media/4.png) |  ![](media/5.png)  |  ![](media/1.gif) 
+
+! ![](media/2.png) | ![](media/3.png) | ![](media/4.png) |  ![](media/5.png) | [](media/1.gif) 

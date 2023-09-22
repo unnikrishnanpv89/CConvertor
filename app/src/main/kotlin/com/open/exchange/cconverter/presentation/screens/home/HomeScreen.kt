@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.MaterialTheme
@@ -28,6 +27,7 @@ import com.open.exchange.cconverter.R
 import com.open.exchange.cconverter.presentation.ui.components.CurrencyShapeResult
 import com.open.exchange.cconverter.presentation.ui.components.CustomDropDownMenu
 import com.open.exchange.cconverter.presentation.ui.components.ProgressView
+import com.open.exchange.cconverter.presentation.ui.components.draganddrop.DragDropColumn
 import com.open.exchange.cconverter.presentation.ui.theme.CConverterTheme
 import com.open.exchange.cconverter.presentation.utils.network.ConnectionState
 import com.open.exchange.cconverter.presentation.utils.network.connectivityState
@@ -109,7 +109,7 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()){
                             viewModel.covertCurrency(it)
                         }
                     )
-                    ConversionTable(uiState.value.resultList)
+                    ConversionTable(viewModel, uiState.value.resultList)
                 }
             } else {
                 ProgressView(modifier = Modifier.align(Alignment.BottomCenter))
@@ -119,14 +119,10 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()){
 }
 
 @Composable
-fun ConversionTable(resultList: MutableList<ResultModel>){
-    LazyColumn(modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        resultList.forEach {
-            item {
-                CurrencyShapeResult(it)
-            }
-        }
+fun ConversionTable(viewModel: HomeScreenViewModel, resultList: MutableList<ResultModel>){
+    DragDropColumn(items = resultList, onSwap = { from, to ->
+        viewModel.swap(from, to)
+    }) { result ->
+        CurrencyShapeResult(result = result)
     }
 }

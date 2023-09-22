@@ -16,7 +16,7 @@ android {
         versionCode = App.Version.CODE
         versionName = App.Version.NAME
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.open.exchange.cconverter.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -39,12 +39,16 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    hilt {
+        enableTransformForLocalTests = true
+    }
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -55,6 +59,7 @@ android {
 dependencies {
     //core
     implementation(Deps.coreKtx)
+    implementation(Deps.activityKtx)
     // compose
     implementation(Deps.composeUI)
     implementation(Deps.composeMaterial)
@@ -90,10 +95,22 @@ dependencies {
     androidTestImplementation(Deps.junit_ext)
     androidTestImplementation(Deps.espresso_core)
     testImplementation("org.mockito:mockito-core:3.12.4")
+    testImplementation("org.mockito:mockito-inline:2.13.0")
     androidTestImplementation("org.mockito:mockito-android:2.24.5")
+    androidTestImplementation(Deps.composeUITest)
+    debugImplementation(Deps.composeUIManifest)
     testImplementation("org.mockito:mockito-inline:2.13.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
     testImplementation("io.mockk:mockk-android:1.13.7")
+    // For instrumented tests.
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.44")
+    androidTestImplementation("androidx.navigation:navigation-testing:2.7.3")
+    // ...with Kotlin.
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
+    // For Robolectric tests.
+    testImplementation("com.google.dagger:hilt-android-testing:2.44")
+    // ...with Kotlin.
+    kaptTest("com.google.dagger:hilt-android-compiler:2.48")
     //other modules
     implementation(project(":data"))
     implementation(project(":domain"))

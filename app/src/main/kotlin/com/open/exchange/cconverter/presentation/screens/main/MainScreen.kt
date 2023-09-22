@@ -48,6 +48,7 @@ fun MainScreen(isFirstTime: Boolean,
         }
     }
     LaunchedEffect(key1 = Unit){
+        println("LaunchedEffect")
         viewModel.prefenceStore.getBoolValueFromDataStore(IS_FIRSTTIME).collectLatest {
             isInit.value = it
         }

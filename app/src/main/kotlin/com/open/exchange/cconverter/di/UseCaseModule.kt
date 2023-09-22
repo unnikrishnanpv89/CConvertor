@@ -6,21 +6,21 @@ import com.open.exchange.domain.usecase.currency.GetCurrencyListUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ViewModelComponent::class)
+@InstallIn(SingletonComponent::class)
 object UseCaseModule {
 
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideGetCurrencyListUseCase(openExchangeRepository: OpenExchangeRepository): GetCurrencyListUseCase =
         GetCurrencyListUseCase(openExchangeRepository = openExchangeRepository)
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideGetConvertListUseCase(openExchangeRepository: OpenExchangeRepository): GetConvertRateUseCase =
         GetConvertRateUseCase(openExchangeRepository = openExchangeRepository)
 }

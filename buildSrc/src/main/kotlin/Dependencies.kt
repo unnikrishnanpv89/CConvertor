@@ -17,6 +17,7 @@ object Deps {
     val composeMaterial3 by lazy { "androidx.compose.material3:material3:${Versions.composeMaterial3}" }
     val activity by lazy { "androidx.activity:activity:${Versions.activityCompose}" }
     val activityCompose by lazy { "androidx.activity:activity-compose:${Versions.activityCompose}" }
+    val activityKtx by lazy { "androidx.activity:activity-ktx:${Versions.activityKtx}" }
     val composeUITest by lazy { "androidx.compose.ui:ui-test-junit4:${Versions.composeVersion}" }
     val composeUITooling by lazy { "androidx.compose.ui:ui-tooling:${Versions.composeVersion}" }
     val composeUIManifest by lazy { "androidx.compose.ui:ui-test-manifest:${Versions.composeVersion}" }
@@ -44,28 +45,6 @@ object Deps {
 
     //core
     val lifecycleRuntime by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntime}" }
-
-    //Rakuten user sdk
-    val userSdk by lazy { "jp.co.rakuten.sdtd:user:${Versions.userSdkVersion}" }
-
-    //image loading
-    val glide by lazy { "com.github.skydoves:landscapist-glide:${Versions.glideVersion}" }
-
-    //coil
-    val coil by lazy {"io.coil-kt:coil-compose:${Versions.coilVersion}" }
-    val coilTransformation by lazy { "com.github.Commit451.coil-transformations:transformations:" +
-            Versions.coilTransformation
-    }
-
-    //exoplayer
-    val exoplayer by lazy {"com.google.android.exoplayer:exoplayer-core:${Versions.exoplayerVersion}" }
-    val exoplayer_ui by lazy {"com.google.android.exoplayer:exoplayer-ui:${Versions.exoplayerVersion}"}
-    val exoplayer_dash by lazy {"com.google.android.exoplayer:exoplayer-dash:${Versions.exoplayerVersion}"}
-    val exoplayer_mediaSession by lazy {"com.google.android.exoplayer:extension-mediasession:${Versions.exoplayerVersion}"}
-    val exoplayer_hls by lazy {"com.google.android.exoplayer:exoplayer-hls:${Versions.exoplayerVersion}"}
-
-    val legacySupport by lazy {"androidx.legacy:legacy-support-v4:${Versions.legacySupport}"}
-    val volley by lazy {"com.android.volley:volley:${Versions.volleyVersion}"}
 
     // splash screen
     val splashScreen by lazy {"androidx.core:core-splashscreen:${Versions.splashScreen}"}

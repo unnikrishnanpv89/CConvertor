@@ -23,6 +23,7 @@ class InitialScreenViewModel @Inject constructor(
     init {
         observeSelection()
     }
+
     private fun observeSelection() {
         viewModelScope.launch {
             currencyDao.getSelectedList().collectLatest {
