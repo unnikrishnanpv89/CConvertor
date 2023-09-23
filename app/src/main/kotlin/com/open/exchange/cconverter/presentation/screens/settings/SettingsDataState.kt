@@ -13,4 +13,5 @@ data class SettingsDataState(
             input = TextFieldValue(String())
         )
     }
+    var isSelectedAll: Boolean = currencyList.filter { it.isSelected }.size == currencyList.size
 }

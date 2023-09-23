@@ -24,9 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         actionBar?.hide()
         enableEdgeToEdge()
-        installSplashScreen().setKeepOnScreenCondition{
-            !splashViewModel.isLoading.value
-        }
+        installSplashScreen()
         setContent {
             CConverterTheme {
                 Surface(

@@ -7,6 +7,7 @@ import com.open.exchange.data.dao.CurrencyDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,8 +25,9 @@ class SettingsViewModel @Inject constructor(
 
     private fun collectCurrencyList() {
         viewModelScope.launch {
-            val currencyList = currencyDao.getList().first()
-            _uiState.value = uiState.value.copy(currencyList = currencyList.toMutableList())
+            currencyDao.getList().collectLatest {
+                _uiState.value = _uiState.value.copy(currencyList = it.toMutableList())
+            }
         }
     }
 
@@ -53,7 +55,17 @@ class SettingsViewModel @Inject constructor(
                     selected = currency.isSelected.not()
                 )
             }
+        }
+    }
 
+    /**
+     * Select or deselect all currencies
+     *
+     * isSelect : true if selected false otherwise
+     */
+    internal fun selectAll(isSelect: Boolean){
+        viewModelScope.launch {
+            currencyDao.updateAll(isSelect)
         }
     }
 

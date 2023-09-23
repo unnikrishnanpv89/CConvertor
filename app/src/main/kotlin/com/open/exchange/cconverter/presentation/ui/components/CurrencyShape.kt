@@ -68,7 +68,8 @@ fun CurrencyShapeSelection(shadowText: String,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(PaddingValues(2.dp))
-                    .size(50.dp),
+                    .size(50.dp)
+                    .testTag(stringResource(R.string.test_selection_tag)),
                 tint = CConverterTheme.colors.onSurface,
                 contentDescription = stringResource(R.string.selected)
             )
