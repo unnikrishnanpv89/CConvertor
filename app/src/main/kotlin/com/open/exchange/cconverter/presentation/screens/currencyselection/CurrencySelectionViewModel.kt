@@ -10,6 +10,7 @@ import com.open.exchange.domain.models.common.Response
 import com.open.exchange.domain.usecase.convert.GetConvertRateUseCase
 import com.open.exchange.domain.usecase.currency.GetCurrencyListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -37,7 +38,7 @@ class CurrencySelectionViewModel @Inject constructor(
      * realtime watching room db stream update ui
      */
     private fun observerCurrency(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             currencyDao.getList().collectLatest {
                 _uiState.value = _uiState.value.copy(currencyList = it.toMutableList(),
                     isLoading = it.isEmpty())
@@ -50,7 +51,7 @@ class CurrencySelectionViewModel @Inject constructor(
      */
     internal fun selectCurrency(index: Int){
         val currency = _uiState.value.currencyList[index]
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             currencyDao.updateCurrency(
                 code = currency.currencyCode,
                 selected = currency.isSelected.not()
@@ -64,7 +65,7 @@ class CurrencySelectionViewModel @Inject constructor(
      * isSelect : true if selected false otherwise
      */
     internal fun selectAll(isSelect: Boolean){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             currencyDao.updateAll(isSelect)
         }
     }
@@ -74,7 +75,7 @@ class CurrencySelectionViewModel @Inject constructor(
      * default true
      */
     fun checkIfFirstTime(callback: (Boolean) -> Unit) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val firstTime = preferenceStore.getBoolValueFromDataStore(IS_FIRSTTIME).first()
             callback(firstTime)
         }
@@ -87,7 +88,7 @@ class CurrencySelectionViewModel @Inject constructor(
      * convert API
      */
     internal fun getCurrencyList(callback: (Boolean) -> Unit){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getCurrencyListUseCase.execute().collectLatest { response ->
                 when(response) {
                     is Response.Loading -> {}
@@ -107,7 +108,7 @@ class CurrencySelectionViewModel @Inject constructor(
      * convert API call
      */
     internal fun getConvertRate(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getConvertRateUseCase.execute().collectLatest { response ->
                 when (response) {
                     is Response.Success -> {

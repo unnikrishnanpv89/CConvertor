@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.open.exchange.data.dao.CurrencyDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -24,7 +25,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun collectCurrencyList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             currencyDao.getList().collectLatest {
                 _uiState.value = _uiState.value.copy(currencyList = it.toMutableList())
             }
@@ -33,7 +34,7 @@ class SettingsViewModel @Inject constructor(
 
     internal fun onTextEdit(value: TextFieldValue){
         _uiState.value = _uiState.value.copy(input = value)
-        viewModelScope.launch{
+        viewModelScope.launch(Dispatchers.IO){
             val result = currencyDao.searchCurrency(value.text).first()
             _uiState.value = uiState.value.copy(currencyList = result.toMutableList())
         }
@@ -49,7 +50,7 @@ class SettingsViewModel @Inject constructor(
             val resultList = _uiState.value.currencyList.toMutableList()
             resultList[index] = currency.copy(isSelected = currency.isSelected.not())
             _uiState.value = _uiState.value.copy(currencyList = resultList)
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO){
                 currencyDao.updateCurrency(
                     code = code,
                     selected = currency.isSelected.not()
@@ -64,9 +65,8 @@ class SettingsViewModel @Inject constructor(
      * isSelect : true if selected false otherwise
      */
     internal fun selectAll(isSelect: Boolean){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             currencyDao.updateAll(isSelect)
         }
     }
-
 }

@@ -11,6 +11,7 @@ import com.open.exchange.data.local.datastore.SharedPrefenceStore.Companion.DEFA
 import com.open.exchange.domain.models.common.Response
 import com.open.exchange.domain.usecase.convert.GetConvertRateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -39,7 +40,7 @@ class HomeScreenViewModel @Inject constructor(
      * This function loads default currency on each startus
      */
     private fun getBaseCurrency(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             preferenceStore.getStringValueFromDataStore(DEFAULT_CURRENCY).collectLatest { code ->
                 val currencyList = currencyDao.getList().first()
                 val index = currencyList.indexOfFirst { it.currencyCode == code }
@@ -58,7 +59,7 @@ class HomeScreenViewModel @Inject constructor(
      * helper function to save dafault base currency
      */
     internal fun saveBaseCurrency(currencyCode: String, index: Int){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if(currencyCode.isNotEmpty()){
                 val currency = currencyCode.split(":")
                 if(currency.size > 1){
@@ -77,7 +78,7 @@ class HomeScreenViewModel @Inject constructor(
      * Its mapped to CODE: NAME format in final selection list
      */
     private fun getCurrencyList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val currencyList = currencyDao.getList().first()
             _uiState.value = _uiState.value.copy(currencyList = currencyList.map { currency ->
                 "${currency.currencyCode}: ${currency.currencyName}"
@@ -90,7 +91,7 @@ class HomeScreenViewModel @Inject constructor(
      *
      */
     private fun observeSelection() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             currencyDao.getSelectedList().collectLatest { list ->
                     _uiState.value = _uiState.value.copy(
                         selectedCurrency = list.toMutableList(),
@@ -109,7 +110,7 @@ class HomeScreenViewModel @Inject constructor(
      */
     internal fun covertCurrency(textFieldValue: TextFieldValue) {
         Log.d(TAG, "Convert Currency ${textFieldValue.text}")
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 if (textFieldValue.text.isEmpty()) {
                     val resultList = _uiState.value.resultList.map{ it.copy(result = 0.0F ) }
@@ -183,7 +184,7 @@ class HomeScreenViewModel @Inject constructor(
      */
     internal fun getConvertRate(){
         Log.d(TAG, "getConvertRate")
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getConvertRateUseCase.execute().collectLatest { response ->
                 when (response) {
                     is Response.Success -> {
